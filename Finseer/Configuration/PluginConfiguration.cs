@@ -1,6 +1,6 @@
 using MediaBrowser.Model.Plugins;
 
-namespace Jellyfin.Plugin.Template.Configuration;
+namespace Finseer.Configuration;
 
 /// <summary>
 /// The configuration options.
@@ -29,29 +29,17 @@ public class PluginConfiguration : BasePluginConfiguration
     public PluginConfiguration()
     {
         // set default options here
-        Options = SomeOptions.AnotherOption;
-        TrueFalseSetting = true;
-        AnInteger = 2;
-        AString = "string";
+        Apikey = string.Empty;
+        Baseurl = "http://localhost:5055";
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether some true or false setting is enabled..
+    /// Gets or sets jellyseer apikey.
     /// </summary>
-    public bool TrueFalseSetting { get; set; }
+    public string Apikey { get; set; }
 
     /// <summary>
-    /// Gets or sets an integer setting.
+    /// Gets or sets jellyseer baseurl.
     /// </summary>
-    public int AnInteger { get; set; }
-
-    /// <summary>
-    /// Gets or sets a string setting.
-    /// </summary>
-    public string AString { get; set; }
-
-    /// <summary>
-    /// Gets or sets an enum option.
-    /// </summary>
-    public SomeOptions Options { get; set; }
+    public string Baseurl { get; set; }
 }
