@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Jellyfin.Plugin.Template.Configuration;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Finseer.Configuration;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Common.Plugins;
+using MediaBrowser.Controller.Providers;
 using MediaBrowser.Model.Plugins;
+using MediaBrowser.Model.Providers;
 using MediaBrowser.Model.Serialization;
 
 namespace Finseer;
@@ -12,7 +17,7 @@ namespace Finseer;
 /// <summary>
 /// The main plugin.
 /// </summary>
-public class FinseerPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
+public class FinseerPlugin : BasePlugin<PluginConfiguration>, IHasWebPages, IRemoteSearchProvider<ItemLookupInfo>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="FinseerPlugin"/> class.
@@ -25,7 +30,7 @@ public class FinseerPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
         Instance = this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="BasePlugin.Name" />
     public override string Name => "Finseer";
 
     /// <inheritdoc />
@@ -37,15 +42,24 @@ public class FinseerPlugin : BasePlugin<PluginConfiguration>, IHasWebPages
     public static FinseerPlugin? Instance { get; private set; }
 
     /// <inheritdoc />
+    public Task<IEnumerable<RemoteSearchResult>> GetSearchResults(ItemLookupInfo searchInfo, CancellationToken cancellationToken)
+    {
+        var tmp = new RemoteSearchResult();
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
+    public Task<HttpResponseMessage> GetImageResponse(string url, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc />
     public IEnumerable<PluginPageInfo> GetPages()
     {
         return
         [
-            new PluginPageInfo
-            {
-                Name = Name,
-                EmbeddedResourcePath = string.Format(CultureInfo.InvariantCulture, "{0}.Configuration.configPage.html", GetType().Namespace)
-            }
+            new PluginPageInfo { Name = Name, EmbeddedResourcePath = string.Format(CultureInfo.InvariantCulture, "{0}.Configuration.configPage.html", GetType().Namespace) }
         ];
     }
 }
